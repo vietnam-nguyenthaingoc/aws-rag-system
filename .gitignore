@@ -1,0 +1,83 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+.Python
+
+# 仮想環境
+.venv/
+.venv-dla/
+venv/
+env/
+ENV/
+
+# テスト / Lint / 型キャッシュ
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+
+# ---- AWS / IaC ----
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+crash.log
+override.tf
+override.tf.json
+
+# CDK / SAM / Serverless
+cdk.out/
+.aws-sam/
+.serverless/
+
+# AWS 認証情報（誤コミット防止・絶対に追跡しない）
+.aws/
+aws.json
+credentials
+
+# ---- 秘密情報 / 環境変数 ----
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# ---- データ / 生成物 ----
+# データセット PDF・パース結果・埋め込み等のローカル成果物
+data/
+local_work/
+*.pdf
+!datasets/**/*.pdf
+chunked/
+vlm-cache/
+*.parquet
+*.faiss
+
+# ---- ログ ----
+*.log
+logs/
+
+# ---- フロントエンド（node を使う場合に備え） ----
+node_modules/
+.next/
+.cache/
+
+# ---- エディタ / OS ----
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Claude agent skills (third-party clone)
+agent-skills/

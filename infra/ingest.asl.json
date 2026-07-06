@@ -1,0 +1,129 @@
+{
+  "Comment": "RAG ingest. source/ プレフィックスを listObjectsV2 で列挙し、PDF ごとに Map: ProcessDocument -> EmbedDocument -> IndexDocument。並列度は文書単位（ページ単位 Map は無し）。",
+  "StartAt": "ListDocuments",
+  "States": {
+    "ListDocuments": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::aws-sdk:s3:listObjectsV2",
+      "Parameters": {
+        "Bucket.$": "$.bucket",
+        "Prefix": "source/"
+      },
+      "ResultPath": "$.listing",
+      "Next": "IngestDocuments"
+    },
+
+    "IngestDocuments": {
+      "Type": "Map",
+      "MaxConcurrency": 5,
+      "ItemsPath": "$.listing.Contents",
+      "ItemSelector": {
+        "bucket.$": "$.bucket",
+        "source_key.$": "$$.Map.Item.Value.Key"
+      },
+      "ItemProcessor": {
+        "ProcessorConfig": { "Mode": "INLINE" },
+        "StartAt": "ProcessDocument",
+        "States": {
+          "ProcessDocument": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "Parameters": {
+              "FunctionName": "${ProcessFunctionArn}",
+              "Payload.$": "$"
+            },
+            "ResultSelector": {
+              "bucket.$": "$.Payload.bucket",
+              "doc_id.$": "$.Payload.doc_id",
+              "domain.$": "$.Payload.domain",
+              "source_file.$": "$.Payload.source_file",
+              "page_count.$": "$.Payload.page_count",
+              "pages.$": "$.Payload.pages"
+            },
+            "ResultPath": "$.processed",
+            "Retry": [
+              {
+                "ErrorEquals": [
+                  "TransientError",
+                  "Lambda.TooManyRequestsException",
+                  "Lambda.ServiceException",
+                  "Lambda.AWSLambdaException",
+                  "Lambda.SdkClientException"
+                ],
+                "IntervalSeconds": 5,
+                "MaxAttempts": 5,
+                "BackoffRate": 2.0
+              }
+            ],
+            "Catch": [
+              { "ErrorEquals": ["States.ALL"], "ResultPath": "$.error", "Next": "DocumentFailed" }
+            ],
+            "Next": "EmbedDocument"
+          },
+
+          "EmbedDocument": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "Parameters": {
+              "FunctionName": "${EmbedFunctionArn}",
+              "Payload": {
+                "bucket.$": "$.processed.bucket",
+                "doc_id.$": "$.processed.doc_id",
+                "domain.$": "$.processed.domain",
+                "source_file.$": "$.processed.source_file",
+                "pages.$": "$.processed.pages"
+              }
+            },
+            "OutputPath": "$.Payload",
+            "Retry": [
+              {
+                "ErrorEquals": ["TransientError", "Lambda.TooManyRequestsException", "Lambda.ServiceException"],
+                "IntervalSeconds": 5,
+                "MaxAttempts": 5,
+                "BackoffRate": 2.0
+              }
+            ],
+            "Catch": [
+              { "ErrorEquals": ["States.ALL"], "ResultPath": "$.error", "Next": "DocumentFailed" }
+            ],
+            "Next": "IndexDocument"
+          },
+
+          "IndexDocument": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "Parameters": {
+              "FunctionName": "${IndexFunctionArn}",
+              "Payload": {
+                "bucket.$": "$.bucket",
+                "doc_id.$": "$.doc_id",
+                "embeddings_prefix.$": "$.embeddings_prefix",
+                "page_count.$": "$.page_count"
+              }
+            },
+            "OutputPath": "$.Payload",
+            "Retry": [
+              {
+                "ErrorEquals": ["TransientError", "Lambda.TooManyRequestsException", "Lambda.ServiceException"],
+                "IntervalSeconds": 5,
+                "MaxAttempts": 5,
+                "BackoffRate": 2.0
+              }
+            ],
+            "Catch": [
+              { "ErrorEquals": ["States.ALL"], "ResultPath": "$.error", "Next": "DocumentFailed" }
+            ],
+            "End": true
+          },
+
+          "DocumentFailed": {
+            "Type": "Fail",
+            "Error": "IngestDocumentFailed",
+            "Cause": "See $.error for the failing state's error payload."
+          }
+        }
+      },
+      "End": true
+    }
+  }
+}

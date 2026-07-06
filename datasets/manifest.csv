@@ -1,0 +1,26 @@
+id,domain,title,page,url,file_name,publisher
+01,finance,2021（令和3）年度 生命保険に関する全国実態調査,17,https://www.jili.or.jp/files/research/zenkokujittai/pdf/r3/i-xvii.pdf,01_2021（令和3）年度 生命保険に関する全国実態調査.pdf,公益財団法人生命保険文化センター
+02,finance,2023年 保険モニタリングレポート【概要】,11,https://www.fsa.go.jp/news/r4/hoken/20230630-2/01.pdf,02_2023年 保険モニタリングレポート【概要】.pdf,金融庁
+03,finance,我が国における気候関連リスクによる住宅ローン・ポートフォリオへの影響分析,31,https://www.fsa.go.jp/frtc/seika/discussion/2023/DP2023-2.pdf,03_我が国における気候関連リスクによる住宅ローン・ポートフォリオへの影響分析.pdf,金融庁
+04,finance,2023事務年度 金融行政方針,30,https://www.fsa.go.jp/news/r5/20230829/230829_main.pdf,04_2023事務年度 金融行政方針.pdf,金融庁
+05,finance,２０２３年度株式分布状況調査の調査結果について,19,https://www.jpx.co.jp/markets/statistics-equities/examination/mklp77000000aiyf-att/j-bunpu2023.pdf,05_２０２３年度株式分布状況調査の調査結果について.pdf,株式会社日本取引所グループ
+06,it,IPAテクニカルウォッチ「AI利用時のセキュリティ脅威・リスク調査報告書」,17,https://www.ipa.go.jp/security/reports/technicalwatch/eid2eo00000022sn-att/report.pdf,06_IPAテクニカルウォッチ「AI利用時のセキュリティ脅威・リスク調査報告書」.pdf,独立行政法人情報処理推進機構
+07,it,脆弱性対策情報データベースJVN iPedia に関する活動報告レポート [2024 年第 2 四半期（4 月～6 月）],11,https://www.ipa.go.jp/security/reports/vuln/jvn/eid2eo00000088ke-att/JVNiPedia2024q2.pdf,07_脆弱性対策情報データベースJVN iPedia に関する活動報告レポート [2024 年第 2 四半期（4 月～6 月）].pdf,独立行政法人情報処理推進機構
+08,it,データの共通理解推進ガイド（本編）,42,https://www.ipa.go.jp/digital/data/ug65p90000001ls2-att/000096537.pdf,08_データの共通理解推進ガイド（本編）.pdf,独立行政法人情報処理推進機構
+09,it,令和 5 年 情報通信に関する現状報告の概要,12,https://www.soumu.go.jp/johotsusintokei/whitepaper/ja/r05/pdf/01point.pdf,09_令和 5 年 情報通信に関する現状報告の概要.pdf,総務省
+10,it,アジャイル開発実践ガイドブック,37,https://www.digital.go.jp/assets/contents/node/basic_page/field_ref_resources/e2a06143-ed29-4f1d-9c31-0f06fca67afc/9fc931f7/20220422_resources_standard_guidelines_guidebook_01.pdf,10_アジャイル開発実践ガイドブック.pdf,デジタル庁
+11,manufacturing,2030年に向けた 繊維産業の展望,16,https://www.meti.go.jp/shingikai/sankoshin/seizo_sangyo/textile_industry/pdf/20220518_2.pdf,11_2030年に向けた 繊維産業の展望.pdf,経済産業省
+12,manufacturing,2024年版 ものづくり白書　概要,37,https://www.meti.go.jp/report/whitepaper/mono/2024/pdf/gaiyo.pdf,12_2024年版 ものづくり白書　概要.pdf,経済産業省
+13,manufacturing,JAS活用マニュアル,32,https://www.maff.go.jp/j/jas/attach/pdf/index-11.pdf,13_JAS活用マニュアル.pdf,農林水産省
+14,manufacturing,ベビーフード自主規格　第Ⅴ版,17,https://www.baby-food.jp/standard/pdf/foodkaku5.pdf,14_ベビーフード自主規格　第Ⅴ版.pdf,日本ベビーフード協議会
+15,manufacturing,令和時代の金型産業ビジョン,52,https://www.jdmia.or.jp/vision/DM_Industry_Vision_3.0.pdf,15_令和時代の金型産業ビジョン.pdf,一般社団法人日本金型工業会
+16,retail,通信販売の申込み段階における表示についてのガイドライン,27,https://www.no-trouble.caa.go.jp/pdf/20220601la02_07.pdf,16_通信販売の申込み段階における表示についてのガイドライン.pdf,消費者庁
+17,retail,独占禁止法に基づく「大規模小売業者による納入業者との取引における特定の不公正な取引方法」ガイドブック　大規模小売業告示,16,https://www.jftc.go.jp/houdou/panfu_files/daikibopamph.pdf,17_独占禁止法に基づく「大規模小売業者による納入業者との取引における特定の不公正な取引方法」ガイドブック　大規模小売業告示.pdf,公正取引委員会
+18,retail,酒類販売管理研修モデルテキスト,15,https://www.nta.go.jp/taxes/sake/hambai/moderutekisuto/pdf/r04_04_03.pdf,18_酒類販売管理研修モデルテキスト.pdf,国税庁
+19,retail,医薬品の適正流通(GDP) ガイドライン概要と解説 (1),46,https://www.mhlw.go.jp/content/11120000/000467835.pdf,19_医薬品の適正流通(GDP) ガイドライン概要と解説 (1).pdf,厚生労働省
+20,retail,第3回 新たなコンビニのあり方検討会 資料2-4　調査報告資料（ユーザーアンケート・店舗出口調査）,29,https://www.meti.go.jp/shingikai/mono_info_service/new_cvs/pdf/003_02_04.pdf,20_第3回 新たなコンビニのあり方検討会 資料2-4　調査報告資料（ユーザーアンケート・店舗出口調査）.pdf,経済産業省
+21,public,神奈川県企業庁における総合評価方式に関する運用ガイドライン〔建設工事編〕（令和6年6月）,47,https://www.pref.kanagawa.jp/documents/5108/r06_06_guideline_itaku.pdf,21_神奈川県企業庁における総合評価方式に関する運用ガイドライン〔建設工事編〕（令和6年6月）.pdf,神奈川県庁
+22,public,自治体の行政手続のオンライン化に係る手順書【第2.0版】,44,https://www.soumu.go.jp/main_content/000857916.pdf,22_自治体の行政手続のオンライン化に係る手順書【第2.0版】.pdf,総務省
+23,public,デフレ完全脱却のための総合経済対策～日本経済の新たなステージにむけて～（令和５年11月2日）施策例（全体版3）,49,https://www5.cao.go.jp/keizai1/keizaitaisaku/2023/20231102_sesaku3.pdf,23_デフレ完全脱却のための総合経済対策～日本経済の新たなステージにむけて～（令和５年11月2日）施策例（全体版3）.pdf,内閣府
+24,public,保健所の活用の仕方,39,https://www.mhlw.go.jp/content/000761091.pdf,24_保健所の活用の仕方.pdf,厚生労働省
+25,public,地方公共団体の基幹業務システムの統一・標準化 標準仕様書と適合確認に関する考え方,21,https://www.digital.go.jp/assets/contents/node/basic_page/field_ref_resources/c58162cb-92e5-4a43-9ad5-095b7c45100c/d779571b/20231027_policies_local_governments_outline_02.pdf,25_地方公共団体の基幹業務システムの統一・標準化 標準仕様書と適合確認に関する考え方.pdf,デジタル庁

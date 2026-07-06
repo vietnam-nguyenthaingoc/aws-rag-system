@@ -1,0 +1,9 @@
+# boto3 / botocore は Lambda ランタイム同梱のため記載しない。
+pydantic==2.13.4
+pydantic-settings==2.14.2
+pymupdf==1.27.2.3
+pymupdf4llm==1.27.2.3
+rapid-layout==1.2.1
+onnxruntime==1.27.0
+numpy==2.2.6
+opensearch-py==2.8.0
