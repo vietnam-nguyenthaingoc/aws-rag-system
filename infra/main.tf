@@ -369,3 +369,92 @@ data "aws_iam_policy_document" "opensearch_access" {
 }
 
 # index Lambda（IAM・関数本体）は上の Lambda セクションに定義。
+
+# ---------------------------------------------------------------------------
+# フロントエンド配信: S3（非公開）+ CloudFront（OAC 経由でのみ読取）
+#   バケット名 = <project_name>-frontend（= aws-rag-assistant-frontend）
+#   S3 は完全非公開。CloudFront の Origin Access Control 経由のみアクセス可。
+# ---------------------------------------------------------------------------
+resource "aws_s3_bucket" "frontend" {
+  bucket        = "${var.project_name}-frontend"
+  force_destroy = true # ポートフォリオ用途: オブジェクトごと destroy 可
+}
+
+resource "aws_s3_bucket_public_access_block" "frontend" {
+  bucket                  = aws_s3_bucket.frontend.id
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "frontend" {
+  bucket = aws_s3_bucket.frontend.id
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
+  }
+}
+
+# CloudFront → S3 の署名付きアクセス（OAI の後継。バケットは非公開のまま）
+resource "aws_cloudfront_origin_access_control" "frontend" {
+  name                              = "${var.project_name}-frontend-oac"
+  origin_access_control_origin_type = "s3"
+  signing_behavior                  = "always"
+  signing_protocol                  = "sigv4"
+}
+
+resource "aws_cloudfront_distribution" "frontend" {
+  enabled             = true
+  default_root_object = "index.html"
+  comment             = "${var.project_name} frontend"
+  price_class         = "PriceClass_200" # 日本含むアジア/北米/欧州（全エッジより安価）
+
+  origin {
+    domain_name              = aws_s3_bucket.frontend.bucket_regional_domain_name
+    origin_id                = "s3-frontend"
+    origin_access_control_id = aws_cloudfront_origin_access_control.frontend.id
+  }
+
+  default_cache_behavior {
+    target_origin_id       = "s3-frontend"
+    viewer_protocol_policy = "redirect-to-https"
+    allowed_methods        = ["GET", "HEAD"]
+    cached_methods         = ["GET", "HEAD"]
+    # Managed-CachingOptimized（AWS 管理ポリシー・固定 ID）
+    cache_policy_id = "658327ea-f89d-4fab-a63d-7e88639e58f6"
+  }
+
+  restrictions {
+    geo_restriction {
+      restriction_type = "none"
+    }
+  }
+
+  viewer_certificate {
+    cloudfront_default_certificate = true # 独自ドメイン無し → *.cloudfront.net
+  }
+}
+
+# CloudFront ディストリビューションのみ S3 読取を許可
+data "aws_iam_policy_document" "frontend_bucket" {
+  statement {
+    actions   = ["s3:GetObject"]
+    resources = ["${aws_s3_bucket.frontend.arn}/*"]
+    principals {
+      type        = "Service"
+      identifiers = ["cloudfront.amazonaws.com"]
+    }
+    condition {
+      test     = "StringEquals"
+      variable = "AWS:SourceArn"
+      values   = [aws_cloudfront_distribution.frontend.arn]
+    }
+  }
+}
+
+resource "aws_s3_bucket_policy" "frontend" {
+  bucket = aws_s3_bucket.frontend.id
+  policy = data.aws_iam_policy_document.frontend_bucket.json
+}

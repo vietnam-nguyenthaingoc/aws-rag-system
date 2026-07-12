@@ -37,3 +37,18 @@ output "opensearch_dashboard_url" {
   description = "OpenSearch Dashboards の URL"
   value       = "https://${aws_opensearch_domain.search.dashboard_endpoint}"
 }
+
+output "frontend_bucket_name" {
+  description = "UI をアップロードする S3 バケット（aws s3 sync 先）"
+  value       = aws_s3_bucket.frontend.id
+}
+
+output "frontend_url" {
+  description = "公開 UI の URL（CloudFront）"
+  value       = "https://${aws_cloudfront_distribution.frontend.domain_name}"
+}
+
+output "frontend_distribution_id" {
+  description = "デプロイ後のキャッシュ無効化に使う CloudFront ディストリビューション ID"
+  value       = aws_cloudfront_distribution.frontend.id
+}

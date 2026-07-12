@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>社内文書アシスタント</title>
+
+  <!-- Zen Kaku Gothic New: covers Latin + full kanji/kana -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Markdown rendering for answers (graceful fallback if blocked) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.0/marked.min.js"></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <div class="brand-text">
+            <h1 class="brand-title">日本語文書RAGアシスタント</h1>
+            <p class="brand-sub">5分野・25文書から出典付きで回答します</p>
+          </div>
+        </div>
+        <div class="status" id="status">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span class="status-label" id="statusLabel">準備完了</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Conversation -->
+    <main class="stream" id="stream">
+      <div class="stream-inner" id="messages">
+        <!-- Empty state -->
+        <section class="welcome" id="welcome">
+          <span class="welcome-mark" aria-hidden="true"></span>
+          <h2 class="welcome-title">何をお調べしますか？</h2>
+          <p class="welcome-body">
+            金融・IT・製造・小売・公共の<strong>5分野</strong>にわたる
+            <strong>25件の公的文書</strong>（約2,100ページ）を検索対象にしています。
+            自然な言葉で質問すると、参照した文書とページを出典として付けて回答します。
+          </p>
+          <p class="welcome-guide">質問の前に、分野を選択してください。</p>
+          <div class="domains" id="domains" role="radiogroup" aria-label="分野を選択">
+            <button class="domain-card" type="button" role="radio" aria-checked="false" data-domain="finance">
+              <span class="domain-card-name">金融</span>
+              <span class="domain-card-desc">保険・証券・金融行政</span>
+            </button>
+            <button class="domain-card" type="button" role="radio" aria-checked="false" data-domain="it">
+              <span class="domain-card-name">IT</span>
+              <span class="domain-card-desc">情報セキュリティ・システム開発</span>
+            </button>
+            <button class="domain-card" type="button" role="radio" aria-checked="false" data-domain="manufacturing">
+              <span class="domain-card-name">製造</span>
+              <span class="domain-card-desc">ものづくり・産業・規格</span>
+            </button>
+            <button class="domain-card" type="button" role="radio" aria-checked="false" data-domain="retail">
+              <span class="domain-card-name">小売</span>
+              <span class="domain-card-desc">販売・流通・取引ルール</span>
+            </button>
+            <button class="domain-card" type="button" role="radio" aria-checked="false" data-domain="public">
+              <span class="domain-card-name">公共</span>
+              <span class="domain-card-desc">行政手続・自治体・政策</span>
+            </button>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Composer -->
+    <footer class="composer">
+      <div class="composer-inner">
+        <div class="field" id="field">
+          <textarea
+            id="input"
+            class="input"
+            rows="1"
+            placeholder="文書について質問する…"
+            autocomplete="off"
+            spellcheck="false"></textarea>
+          <button id="send" class="send locked" type="button" aria-label="送信">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+              <path d="M4 12h13M11 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button id="stop" class="stop" type="button" aria-label="停止" hidden>
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+              <rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+        <p class="hint">Enter で送信 · Shift + Enter で改行</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
